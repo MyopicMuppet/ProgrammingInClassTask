@@ -1,45 +1,48 @@
-﻿using UnityEditor;
+﻿using UnityEngine;
 
-[RequireComponent((CharacterController))]
-[AddComponent("Intro PRG/RPG/Player/Movement")]
-public class Movenent : MonoBehaviour 
+
+[RequireComponent(typeof(CharacterController))]
+
+
+[AddComponentMenu("Intro PRG/RPG/Player/Movement")]
+
+public class Movement : MonoBehaviour 
 {
     #region Variables
     [Header("PLAYER MOVEMENT")]
     [Space(10)]
     [Header("Characters Move Direction")]
-    public Vector2 moveDirection;
+    public Vector3 moveDirection;
     private CharacterController _charC;
     [Header("Character Variables")]
-    public float jumpSpeed = 8.0;
-    public float speed = 5;
-    public float gravity = 20;
-    [Header("")]
+    public float jumpSpeed = 8f;
+    public float speed = 5f;
+    public float gravity = 20f;
     #endregion
     #region Start
     private void Start()
     {
-        charC = GetComponent<CharacterController>();
+        _charC = GetComponent<CharacterController>();
     }
     #endregion
     #region Update
-    private void update()
+    private void Update()
     {
         if(_charC.isGrounded)
         {
-            movementDirection = new Vector3(Input.GetAxis("Horisontal"), 0, Input.GetAxis("Vertical")));
-            moveDirection = transform.TransformDirection(moveDirection)
+            moveDirection = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+            moveDirection = transform.TransformDirection(moveDirection);
             moveDirection *= speed;
 
-            if(Input.GetButton("jump"))
+            if(Input.GetButton("Jump"))
             {
                 moveDirection.y = jumpSpeed;
             }
         }
         
-        moveDirection.y -= gravity * Time.DeltaTime;
-        _charC.Move(moveDirection * Time.Deltatime);
+        moveDirection.y -= gravity * Time.deltaTime;
+        _charC.Move(moveDirection * Time.deltaTime);
     }
-
+    //16 errors
 }
-//16 errors
+#endregion
